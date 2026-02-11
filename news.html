@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News - Johnnie's Place</title>
+  <meta name="description" content="Official news, announcements, and newsletters from Johnnie's Place.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="Johnnie's Place" class="logo-img">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li class="nav-dropdown">
+          <a href="about.html">About</a>
+          <div class="dropdown-menu">
+            <a href="about.html">Our Story</a>
+            <a href="mission.html">Mission</a>
+            <a href="team.html">Leadership Team</a>
+          </div>
+        </li>
+        <li class="nav-dropdown">
+          <a href="blog.html">Updates</a>
+          <div class="dropdown-menu">
+            <a href="stay-updated.html">Stay Updated</a>
+            <a href="blog.html">Blog</a>
+            <a href="news.html" class="active">News</a>
+          </div>
+        </li>
+        <li><a href="events.html">Events</a></li>
+        <li class="nav-dropdown">
+          <a href="support.html">Support Us</a>
+          <div class="dropdown-menu">
+            <a href="support.html#donate">Donate</a>
+            <a href="fundraisers.html">Fundraisers</a>
+            <a href="get-involved.html">Get Involved</a>
+          </div>
+        </li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="support.html" class="btn btn-primary">Donate</a>
+      </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="mission.html">Mission</a>
+      <a href="team.html">Leadership</a>
+      <a href="stay-updated.html">Stay Updated</a>
+      <a href="blog.html">Blog</a>
+      <a href="news.html">News</a>
+      <a href="events.html">Events</a>
+      <a href="support.html">Donate</a>
+      <a href="fundraisers.html">Fundraisers</a>
+      <a href="get-involved.html">Get Involved</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <section class="page-header">
+    <div class="section-inner">
+      <h1>News & Announcements</h1>
+      <p class="page-subtitle">Official updates, newsletters, and announcements from Johnnie's Place</p>
+    </div>
+  </section>
+
+  <!-- NEWS POSTS -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="blog-grid">
+
+        <!-- Sample News Post - This is the one you just created! -->
+        <article class="blog-post-card">
+          <div class="blog-post-meta">
+            <span class="blog-date">February 11, 2026</span>
+            <span class="blog-category">Fundraiser</span>
+          </div>
+          <h2 class="blog-post-title">News!</h2>
+          <p class="blog-post-excerpt">
+            Testing editing feature
+          </p>
+        </article>
+
+        <!-- More news posts will be added through the CMS -->
+        <div class="blog-empty-state">
+          <p>More news and updates coming soon. Stay tuned!</p>
+          <a href="stay-updated.html" class="btn btn-secondary">Subscribe for Updates</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="images/logo.png" alt="Johnnie's Place" class="footer-logo">
+          <p>Building community and providing safe housing for adults with autism.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Organization</h4>
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="mission.html">Mission</a>
+        </div>
+        <div class="footer-col">
+          <h4>Get Involved</h4>
+          <a href="support.html">Donate</a>
+          <a href="events.html">Events</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <p>318 East Elm Street<br>Conshohocken, PA 19428</p>
+          <p>610 960 8205</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Johnnie's Place. All rights reserved.</p>
+        <p class="footer-legal">501(c)(3) Tax-Exempt Organization</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+</body>
+</html>

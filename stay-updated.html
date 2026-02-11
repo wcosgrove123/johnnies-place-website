@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stay Updated - Johnnie's Place</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="Johnnie's Place" class="logo-img">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li class="nav-dropdown">
+          <a href="about.html">About</a>
+          <div class="dropdown-menu">
+            <a href="about.html">Our Story</a>
+            <a href="mission.html">Mission</a>
+            <a href="team.html">Leadership Team</a>
+          </div>
+        </li>
+        <li class="nav-dropdown">
+          <a href="blog.html">Updates</a>
+          <div class="dropdown-menu">
+            <a href="stay-updated.html" class="active">Stay Updated</a>
+            <a href="blog.html">Blog</a>
+            <a href="news.html">News</a>
+          </div>
+        </li>
+        <li><a href="events.html">Events</a></li>
+        <li class="nav-dropdown">
+          <a href="support.html">Support Us</a>
+          <div class="dropdown-menu">
+            <a href="support.html#donate">Donate</a>
+            <a href="fundraisers.html">Fundraisers</a>
+            <a href="get-involved.html">Get Involved</a>
+          </div>
+        </li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="support.html" class="btn btn-primary">Donate</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="page-header">
+    <div class="section-inner">
+      <h1>Stay Updated</h1>
+      <p class="page-subtitle">Subscribe to receive news, stories, and updates from Johnnie's Place</p>
+    </div>
+  </section>
+
+  <section class="section newsletter-section">
+    <div class="section-inner">
+      <div class="newsletter-content">
+        <h2>Never Miss an Update</h2>
+        <p>Get the latest news, event announcements, and stories from Johnnie's Place delivered directly to your inbox.</p>
+        <form class="newsletter-form" id="newsletterForm">
+          <input type="email" placeholder="Your email address" required>
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+        <p class="newsletter-note">We respect your privacy and won't share your information. Unsubscribe anytime.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <p>&copy; 2025 Johnnie's Place. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+</body>
+</html>
