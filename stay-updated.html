@@ -62,11 +62,53 @@
       <div class="newsletter-content">
         <h2>Never Miss an Update</h2>
         <p>Get the latest news, event announcements, and stories from Johnnie's Place delivered directly to your inbox.</p>
+
         <form class="newsletter-form" id="newsletterForm">
-          <input type="email" placeholder="Your email address" required>
-          <button type="submit" class="btn btn-primary">Subscribe</button>
+          <input
+            type="email"
+            id="emailInput"
+            placeholder="Your email address"
+            required
+            autocomplete="email"
+          >
+
+          <div class="newsletter-preferences">
+            <p class="preferences-label">What would you like to receive?</p>
+            <label class="preference-option">
+              <input type="checkbox" name="preferences" value="general" checked>
+              <span>General Updates</span>
+            </label>
+            <label class="preference-option">
+              <input type="checkbox" name="preferences" value="events">
+              <span>Events & Activities</span>
+            </label>
+            <label class="preference-option">
+              <input type="checkbox" name="preferences" value="stories">
+              <span>Success Stories & Impact</span>
+            </label>
+            <label class="preference-option">
+              <input type="checkbox" name="preferences" value="fundraising">
+              <span>Fundraising Campaigns</span>
+            </label>
+            <label class="preference-option">
+              <input type="checkbox" name="preferences" value="volunteer">
+              <span>Volunteer Opportunities</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="subscribeBtn">
+            <span class="btn-text">Subscribe</span>
+            <span class="btn-loading" style="display: none;">Subscribing...</span>
+          </button>
+
+          <div id="formMessage" class="form-message" style="display: none;"></div>
         </form>
-        <p class="newsletter-note">We respect your privacy and won't share your information. Unsubscribe anytime.</p>
+
+        <p class="newsletter-note">
+          <strong>Your Privacy Matters:</strong> We respect your privacy and will never share your information with third parties.
+          Your data is stored securely and you can unsubscribe at any time.
+          <a href="contact.html">Questions?</a>
+        </p>
       </div>
     </div>
   </section>

@@ -83,6 +83,73 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ========================================
+// NEWSLETTER SUBSCRIPTION
+// ========================================
+const newsletterForm = document.getElementById('newsletterForm');
+if (newsletterForm) {
+  newsletterForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const emailInput = document.getElementById('emailInput');
+    const subscribeBtn = document.getElementById('subscribeBtn');
+    const btnText = subscribeBtn.querySelector('.btn-text');
+    const btnLoading = subscribeBtn.querySelector('.btn-loading');
+    const formMessage = document.getElementById('formMessage');
+
+    // Get email and preferences
+    const email = emailInput.value.trim();
+    const checkboxes = newsletterForm.querySelectorAll('input[name="preferences"]:checked');
+    const preferences = Array.from(checkboxes).map(cb => cb.value);
+
+    // Disable form during submission
+    subscribeBtn.disabled = true;
+    btnText.style.display = 'none';
+    btnLoading.style.display = 'inline';
+    formMessage.style.display = 'none';
+
+    try {
+      const response = await fetch('/.netlify/functions/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, preferences })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Success
+        formMessage.textContent = data.message;
+        formMessage.className = 'form-message success';
+        formMessage.style.display = 'block';
+
+        // Clear form
+        newsletterForm.reset();
+        // Re-check "general" by default
+        const generalCheckbox = newsletterForm.querySelector('input[value="general"]');
+        if (generalCheckbox) generalCheckbox.checked = true;
+      } else {
+        // Error
+        formMessage.textContent = data.error || 'Something went wrong. Please try again.';
+        formMessage.className = 'form-message error';
+        formMessage.style.display = 'block';
+      }
+    } catch (error) {
+      console.error('Subscription error:', error);
+      formMessage.textContent = 'Network error. Please check your connection and try again.';
+      formMessage.className = 'form-message error';
+      formMessage.style.display = 'block';
+    } finally {
+      // Re-enable form
+      subscribeBtn.disabled = false;
+      btnText.style.display = 'inline';
+      btnLoading.style.display = 'none';
+    }
+  });
+}
+
+// ========================================
 // INTERSECTION OBSERVER FOR ANIMATIONS
 // ========================================
 const observerOptions = {

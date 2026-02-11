@@ -1,3 +1,14 @@
-
 # Legal documents - keep private
 legal/
+
+# Environment variables - keep private
+.env
+.env.local
+.env.*.local
+
+# Dependency directories
+node_modules/
+
+# Build output
+dist/
+.netlify/

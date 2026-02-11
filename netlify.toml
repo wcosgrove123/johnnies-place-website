@@ -1,0 +1,19 @@
+# Netlify Configuration for Johnnie's Place
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  # Set Node.js version
+  node_bundler = "esbuild"
+
+# Redirect rules
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# Environment variables (these are set in Netlify dashboard, not here)
+# SUPABASE_URL
+# SUPABASE_ANON_KEY
+# SUPABASE_SERVICE_ROLE_KEY

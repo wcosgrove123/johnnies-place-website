@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unsubscribe - Johnnie's Place</title>
+  <link rel="icon" type="image/jpeg" href="images/favicon.jpg?v=3">
+  <link rel="apple-touch-icon" href="images/favicon.jpg?v=3">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="Johnnie's Place" class="logo-img">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="stay-updated.html">Subscribe</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="page-header">
+    <div class="section-inner">
+      <h1>Unsubscribe from Newsletter</h1>
+      <p class="page-subtitle">We're sorry to see you go</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner">
+      <div class="newsletter-content">
+        <div id="unsubscribeStatus">
+          <p>Processing your request...</p>
+        </div>
+        <div style="margin-top: 32px;">
+          <a href="stay-updated.html" class="btn btn-primary">Change your mind? Resubscribe</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <p>&copy; 2025 Johnnie's Place. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Get token from URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    const statusDiv = document.getElementById('unsubscribeStatus');
+
+    if (!token) {
+      statusDiv.innerHTML = `
+        <div class="form-message error">
+          <p><strong>Invalid unsubscribe link</strong></p>
+          <p>Please use the unsubscribe link from the email you received.</p>
+        </div>
+      `;
+    } else {
+      // Send unsubscribe request
+      fetch('/.netlify/functions/unsubscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.error) {
+            statusDiv.innerHTML = `
+              <div class="form-message error">
+                <p><strong>${data.error}</strong></p>
+              </div>
+            `;
+          } else {
+            statusDiv.innerHTML = `
+              <div class="form-message success">
+                <p><strong>${data.message}</strong></p>
+                ${data.email ? `<p style="margin-top: 8px; font-size: 0.9rem;">${data.email}</p>` : ''}
+              </div>
+            `;
+          }
+        })
+        .catch(error => {
+          console.error('Unsubscribe error:', error);
+          statusDiv.innerHTML = `
+            <div class="form-message error">
+              <p><strong>Network error</strong></p>
+              <p>Please check your connection and try again.</p>
+            </div>
+          `;
+        });
+    }
+  </script>
+</body>
+</html>
