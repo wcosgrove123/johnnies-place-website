@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fundraisers - Johnnie's Place</title>
+  <meta name="description" content="Support our fundraising campaigns and help make a difference for adults with autism.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="Johnnie's Place" class="logo-img">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li class="nav-dropdown">
+          <a href="about.html">About</a>
+          <div class="dropdown-menu">
+            <a href="about.html">Our Story</a>
+            <a href="mission.html">Mission</a>
+            <a href="team.html">Leadership Team</a>
+          </div>
+        </li>
+        <li class="nav-dropdown">
+          <a href="blog.html">Updates</a>
+          <div class="dropdown-menu">
+            <a href="stay-updated.html">Stay Updated</a>
+            <a href="blog.html">Blog</a>
+            <a href="news.html">News</a>
+          </div>
+        </li>
+        <li><a href="events.html">Events</a></li>
+        <li class="nav-dropdown">
+          <a href="support.html" class="active">Support Us</a>
+          <div class="dropdown-menu">
+            <a href="support.html#donate">Donate</a>
+            <a href="fundraisers.html">Fundraisers</a>
+            <a href="get-involved.html">Get Involved</a>
+          </div>
+        </li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="support.html" class="btn btn-primary">Donate</a>
+      </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="mission.html">Mission</a>
+      <a href="team.html">Leadership</a>
+      <a href="stay-updated.html">Stay Updated</a>
+      <a href="blog.html">Blog</a>
+      <a href="news.html">News</a>
+      <a href="events.html">Events</a>
+      <a href="support.html">Donate</a>
+      <a href="fundraisers.html">Fundraisers</a>
+      <a href="get-involved.html">Get Involved</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <section class="page-header">
+    <div class="section-inner">
+      <h1>Fundraising Campaigns</h1>
+      <p class="page-subtitle">Join us in making a difference through our fundraising initiatives</p>
+    </div>
+  </section>
+
+  <!-- FUNDRAISERS -->
+  <section class="section">
+    <div class="section-inner">
+      <div id="fundraisers-container" class="fundraisers-grid">
+        <div class="loading-state">
+          <p>Loading fundraisers...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="images/logo.png" alt="Johnnie's Place" class="footer-logo">
+          <p>Building community and providing safe housing for adults with autism.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Organization</h4>
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="mission.html">Mission</a>
+        </div>
+        <div class="footer-col">
+          <h4>Get Involved</h4>
+          <a href="support.html">Donate</a>
+          <a href="events.html">Events</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <p>318 East Elm Street<br>Conshohocken, PA 19428</p>
+          <p>610 960 8205</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Johnnie's Place. All rights reserved. • <a href="/admin/" style="color: var(--text-muted); text-decoration: underline;">Admin Login</a></p>
+        <p class="footer-legal">501(c)(3) Tax-Exempt Organization</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Load fundraisers dynamically
+    async function loadFundraisers() {
+      const container = document.getElementById('fundraisers-container');
+
+      // Try to load known fundraisers (in production, this would be generated or fetched from an API)
+      const fundraiserSlugs = [
+        'sea-to-shining-sea'
+      ];
+
+      if (fundraiserSlugs.length === 0) {
+        container.innerHTML = '<div class="empty-state"><p>No active fundraisers at this time. Check back soon!</p></div>';
+        return;
+      }
+
+      try {
+        const fundraisers = await Promise.all(
+          fundraiserSlugs.map(async (slug) => {
+            try {
+              const response = await fetch(`content/fundraisers/${slug}.md`);
+              if (!response.ok) return null;
+              const text = await response.text();
+
+              // Parse frontmatter
+              const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
+              const match = text.match(frontmatterRegex);
+
+              if (match) {
+                const frontmatter = match[1];
+                const body = match[2];
+
+                // Parse YAML-like frontmatter
+                const meta = {};
+                let currentKey = null;
+                let indent = 0;
+
+                frontmatter.split('\n').forEach(line => {
+                  const keyMatch = line.match(/^(\w+):\s*(.*)$/);
+                  if (keyMatch) {
+                    currentKey = keyMatch[1];
+                    const value = keyMatch[2].trim();
+                    if (value) {
+                      meta[currentKey] = value.replace(/^["']|["']$/g, '');
+                    } else {
+                      meta[currentKey] = {};
+                    }
+                  } else if (line.trim() && currentKey) {
+                    const subMatch = line.match(/^\s+(\w+):\s*(.*)$/);
+                    if (subMatch && typeof meta[currentKey] === 'object') {
+                      meta[currentKey][subMatch[1]] = subMatch[2].trim().replace(/^["']|["']$/g, '');
+                    }
+                  }
+                });
+
+                return {
+                  slug,
+                  title: meta.title || 'Untitled',
+                  status: meta.status || 'Active',
+                  excerpt: meta.excerpt || '',
+                  image: meta.image || null,
+                  features: meta.features || {},
+                  financial: meta.financial || {},
+                  event: meta.event || {},
+                  links: meta.links || {},
+                  order: parseInt(meta.order) || 999
+                };
+              }
+            } catch (error) {
+              console.error(`Error loading fundraiser ${slug}:`, error);
+              return null;
+            }
+          })
+        );
+
+        const validFundraisers = fundraisers.filter(f => f !== null).sort((a, b) => a.order - b.order);
+
+        if (validFundraisers.length === 0) {
+          container.innerHTML = '<div class="empty-state"><p>No active fundraisers at this time. Check back soon!</p></div>';
+          return;
+        }
+
+        // Render fundraisers
+        container.innerHTML = validFundraisers.map(fundraiser => {
+          let progressBar = '';
+          if (fundraiser.features.show_progress === 'true' && fundraiser.financial.goal && fundraiser.financial.current) {
+            const goalNum = parseFloat(fundraiser.financial.goal.replace(/[^0-9.]/g, ''));
+            const currentNum = parseFloat(fundraiser.financial.current.replace(/[^0-9.]/g, ''));
+            const percentage = Math.min((currentNum / goalNum) * 100, 100);
+
+            progressBar = `
+              <div class="fundraiser-progress">
+                <div class="progress-stats">
+                  <span class="progress-current">${fundraiser.financial.current} raised</span>
+                  <span class="progress-goal">of ${fundraiser.financial.goal} goal</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: ${percentage}%"></div>
+                </div>
+              </div>
+            `;
+          }
+
+          let eventDetails = '';
+          if (fundraiser.features.show_event === 'true' && fundraiser.event.start_date) {
+            const startDate = new Date(fundraiser.event.start_date);
+            const endDate = fundraiser.event.end_date ? new Date(fundraiser.event.end_date) : null;
+            const dateStr = endDate
+              ? `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`
+              : startDate.toLocaleDateString();
+
+            eventDetails = `
+              <div class="fundraiser-event">
+                <span>📅 ${dateStr}</span>
+                ${fundraiser.event.location ? `<span>📍 ${fundraiser.event.location}</span>` : ''}
+              </div>
+            `;
+          }
+
+          let actions = '';
+          if (fundraiser.features.enable_donations === 'true' || fundraiser.features.enable_signups === 'true') {
+            actions = '<div class="fundraiser-actions">';
+            if (fundraiser.features.enable_donations === 'true') {
+              const donateUrl = fundraiser.links.donate_url || 'support.html';
+              actions += `<a href="${donateUrl}" class="btn btn-primary">Donate</a>`;
+            }
+            if (fundraiser.features.enable_signups === 'true' && fundraiser.links.signup_url) {
+              actions += `<a href="${fundraiser.links.signup_url}" class="btn btn-secondary">Sign Up</a>`;
+            }
+            actions += '</div>';
+          }
+
+          const statusBadge = fundraiser.status !== 'Active'
+            ? `<span class="fundraiser-status status-${fundraiser.status.toLowerCase()}">${fundraiser.status}</span>`
+            : '';
+
+          return `
+            <article class="fundraiser-card">
+              ${fundraiser.image ? `<img src="${fundraiser.image}" alt="${fundraiser.title}" class="fundraiser-image">` : ''}
+              <div class="fundraiser-content">
+                <div class="fundraiser-header">
+                  <h2>${fundraiser.title}</h2>
+                  ${statusBadge}
+                </div>
+                ${eventDetails}
+                <p class="fundraiser-excerpt">${fundraiser.excerpt}</p>
+                ${progressBar}
+                <div class="fundraiser-footer">
+                  <a href="fundraiser.html?id=${fundraiser.slug}" class="fundraiser-link">Learn More →</a>
+                  ${actions}
+                </div>
+              </div>
+            </article>
+          `;
+        }).join('');
+
+      } catch (error) {
+        console.error('Error loading fundraisers:', error);
+        container.innerHTML = '<div class="empty-state"><p>Unable to load fundraisers. Please try again later.</p></div>';
+      }
+    }
+
+    loadFundraisers();
+
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+</body>
+</html>

@@ -93,3 +93,53 @@ collections:
       - {label: "Bio", name: "bio", widget: "text", required: false}
       - {label: "Photo", name: "photo", widget: "image", required: false}
       - {label: "Order", name: "order", widget: "number", default: 1}
+
+  # FUNDRAISERS
+  - name: "fundraisers"
+    label: "Fundraisers"
+    folder: "content/fundraisers"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Status", name: "status", widget: "select", options: ["Active", "Completed", "Upcoming"], default: "Active"}
+      - {label: "Featured Image", name: "image", widget: "image", required: false}
+      - {label: "Short Description", name: "excerpt", widget: "text"}
+      - {label: "Full Description", name: "body", widget: "markdown"}
+
+      - label: "Fundraiser Features"
+        name: "features"
+        widget: "object"
+        fields:
+          - {label: "Show Progress Bar", name: "show_progress", widget: "boolean", default: true}
+          - {label: "Enable Donations", name: "enable_donations", widget: "boolean", default: true}
+          - {label: "Enable Signups", name: "enable_signups", widget: "boolean", default: false}
+          - {label: "Show Event Details", name: "show_event", widget: "boolean", default: false}
+
+      - label: "Financial Goal (optional)"
+        name: "financial"
+        widget: "object"
+        required: false
+        fields:
+          - {label: "Goal Amount", name: "goal", widget: "string", required: false, hint: "e.g., $50,000"}
+          - {label: "Current Amount", name: "current", widget: "string", required: false, hint: "e.g., $12,500"}
+
+      - label: "Event Details (optional)"
+        name: "event"
+        widget: "object"
+        required: false
+        fields:
+          - {label: "Start Date", name: "start_date", widget: "datetime", required: false}
+          - {label: "End Date", name: "end_date", widget: "datetime", required: false}
+          - {label: "Location", name: "location", widget: "string", required: false}
+
+      - label: "Action Links"
+        name: "links"
+        widget: "object"
+        required: false
+        fields:
+          - {label: "Donation Link", name: "donate_url", widget: "string", required: false, hint: "External donation page URL"}
+          - {label: "Signup Link", name: "signup_url", widget: "string", required: false, hint: "External signup form URL"}
+          - {label: "More Info Link", name: "info_url", widget: "string", required: false, hint: "External website or page"}
+
+      - {label: "Order", name: "order", widget: "number", default: 1, hint: "Lower numbers appear first"}
