@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support Us - Johnnie's Place</title>
+  <meta name="description" content="Support Johnnie's Place and help provide housing and community for adults with autism.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="Johnnie's Place" class="logo-img">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="mission.html">Mission</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="support.html" class="active">Support Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="support.html" class="btn btn-primary">Donate</a>
+      </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="mission.html">Mission</a>
+      <a href="blog.html">Blog</a>
+      <a href="support.html">Support Us</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <section class="page-header">
+    <div class="section-inner">
+      <h1>Support Our Mission</h1>
+      <p class="page-subtitle">Help us create meaningful community and housing for adults with autism</p>
+    </div>
+  </section>
+
+  <!-- WAYS TO SUPPORT -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-label">Get Involved</span>
+        <h2 class="section-title">Ways to Support</h2>
+        <p class="section-subtitle">
+          Every contribution helps us build a sustainable model for community care and housing.
+        </p>
+      </div>
+      <div class="support-grid">
+        <div class="support-card">
+          <h3>Financial Support</h3>
+          <p>Your donation helps fund housing improvements, programming, and operational costs. All contributions are tax-deductible.</p>
+          <a href="#donate-form" class="btn btn-primary">Make a Donation</a>
+        </div>
+        <div class="support-card">
+          <h3>Volunteer</h3>
+          <p>Share your time and talents to support our residents through activities, mentorship, or administrative assistance.</p>
+          <a href="contact.html" class="btn btn-secondary">Get Involved</a>
+        </div>
+        <div class="support-card">
+          <h3>Community Partnership</h3>
+          <p>Local businesses and organizations can partner with us to provide employment, activities, and community connection.</p>
+          <a href="contact.html" class="btn btn-secondary">Partner With Us</a>
+        </div>
+        <div class="support-card">
+          <h3>Spread the Word</h3>
+          <p>Help us reach more families and supporters by sharing our mission within your network.</p>
+          <a href="about.html" class="btn btn-secondary">Learn Our Story</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUNDRAISER HIGHLIGHT -->
+  <section class="section fundraiser-section">
+    <div class="section-inner">
+      <div class="fundraiser-content">
+        <span class="section-label">Featured Fundraiser</span>
+        <h2>Sea to Shining Sea Bike Ride</h2>
+        <p>
+          In honor of America's 250th anniversary, two riders are cycling coast-to-coast from Ocean Shores, Washington to Avalon, New Jersey to raise money for Johnnie's Place.
+        </p>
+        <div class="fundraiser-stats">
+          <div class="fundraiser-stat">
+            <div class="stat-number">3,664</div>
+            <div class="stat-label">Miles</div>
+          </div>
+          <div class="fundraiser-stat">
+            <div class="stat-number">46</div>
+            <div class="stat-label">Days</div>
+          </div>
+          <div class="fundraiser-stat">
+            <div class="stat-number">May 20 - July 4</div>
+            <div class="stat-label">2026</div>
+          </div>
+        </div>
+        <p class="fundraiser-description">
+          Follow the journey and support this incredible cross-country effort benefiting Johnnie's Place.
+        </p>
+        <a href="../sea-to-shining-sea/index.html" class="btn btn-primary btn-large">Follow the Ride</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DONATION FORM -->
+  <section class="section donate-section" id="donate-form">
+    <div class="section-inner">
+      <div class="donate-layout">
+        <div class="donate-content">
+          <h2>Make a Donation</h2>
+          <p>
+            Your generous contribution helps us provide safe housing, comprehensive support services, and meaningful community connections for adults with autism.
+          </p>
+          <p>
+            Johnnie's Place is a registered 501(c)(3) nonprofit organization. All donations are tax-deductible to the fullest extent allowed by law.
+          </p>
+          <div class="tax-info">
+            <h4>Tax Information</h4>
+            <p>EIN will be provided upon request once finalized.</p>
+          </div>
+        </div>
+        <div class="donate-form">
+          <h3>Donation Information</h3>
+          <form id="donateForm">
+            <div class="form-group">
+              <label for="amount">Donation Amount</label>
+              <input type="text" id="amount" name="amount" placeholder="$100" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" required>
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="dedication">Dedicate this gift (optional)</label>
+              <input type="text" id="dedication" name="dedication" placeholder="In honor of...">
+            </div>
+            <button type="submit" class="btn btn-primary btn-large" style="width: 100%; justify-content: center;">
+              Proceed to Payment
+            </button>
+            <p class="form-note">Payment processing will be integrated soon. For now, please contact us directly to make a donation.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="images/logo.png" alt="Johnnie's Place" class="footer-logo">
+          <p>Building community and providing safe housing for adults with autism.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Organization</h4>
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="mission.html">Mission</a>
+        </div>
+        <div class="footer-col">
+          <h4>Get Involved</h4>
+          <a href="support.html">Donate</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <p>318 East Elm Street<br>Conshohocken, PA 19428</p>
+          <p>610 960 8205</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Johnnie's Place. All rights reserved.</p>
+        <p class="footer-legal">501(c)(3) Tax-Exempt Organization</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

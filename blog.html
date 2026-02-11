@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog - Johnnie's Place</title>
+  <meta name="description" content="Updates, stories, and news from Johnnie's Place.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="Johnnie's Place" class="logo-img">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="mission.html">Mission</a></li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+        <li><a href="support.html">Support Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="support.html" class="btn btn-primary">Donate</a>
+      </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="mission.html">Mission</a>
+      <a href="blog.html">Blog</a>
+      <a href="support.html">Support Us</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <section class="page-header">
+    <div class="section-inner">
+      <h1>Blog & Updates</h1>
+      <p class="page-subtitle">Stories, news, and updates from Johnnie's Place</p>
+    </div>
+  </section>
+
+  <!-- BLOG POSTS -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="blog-grid">
+
+        <!-- Sample Blog Post -->
+        <article class="blog-post-card">
+          <div class="blog-post-meta">
+            <span class="blog-date">February 11, 2025</span>
+            <span class="blog-author">by Michael Dinda</span>
+          </div>
+          <h2 class="blog-post-title">Welcome to Johnnie's Place</h2>
+          <p class="blog-post-excerpt">
+            We're excited to launch Johnnie's Place, a nonprofit dedicated to providing safe housing and meaningful community for adults with autism.
+          </p>
+          <a href="blog-post.html" class="blog-read-more">Read More →</a>
+        </article>
+
+        <!-- More blog posts will be added here dynamically through the CMS -->
+        <div class="blog-empty-state">
+          <p>More blog posts coming soon. Check back regularly for updates!</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER SIGNUP -->
+  <section class="section newsletter-section">
+    <div class="section-inner">
+      <div class="newsletter-content">
+        <h2>Stay Updated</h2>
+        <p>Subscribe to receive news, updates, and stories from Johnnie's Place directly to your inbox.</p>
+        <form class="newsletter-form" id="newsletterForm">
+          <input type="email" placeholder="Your email address" required>
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+        <p class="newsletter-note">We respect your privacy and won't share your information.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="images/logo.png" alt="Johnnie's Place" class="footer-logo">
+          <p>Building community and providing safe housing for adults with autism.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Organization</h4>
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="mission.html">Mission</a>
+        </div>
+        <div class="footer-col">
+          <h4>Get Involved</h4>
+          <a href="support.html">Donate</a>
+          <a href="blog.html">Blog</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <p>318 East Elm Street<br>Conshohocken, PA 19428</p>
+          <p>610 960 8205</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Johnnie's Place. All rights reserved.</p>
+        <p class="footer-legal">501(c)(3) Tax-Exempt Organization</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Newsletter form handling
+    const newsletterForm = document.getElementById('newsletterForm');
+    if (newsletterForm) {
+      newsletterForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Thank you for subscribing! Newsletter functionality will be integrated soon.');
+        newsletterForm.reset();
+      });
+    }
+  </script>
+</body>
+</html>
