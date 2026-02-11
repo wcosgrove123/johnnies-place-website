@@ -137,7 +137,7 @@ h1, h2, h3, h4 {
   position: relative;
 }
 
-.nav-links a::after {
+.nav-links a::before {
   content: '';
   position: absolute;
   bottom: -4px;
@@ -153,8 +153,8 @@ h1, h2, h3, h4 {
   color: var(--text-primary);
 }
 
-.nav-links a:hover::after,
-.nav-links a.active::after {
+.nav-links a:hover::before,
+.nav-links a.active::before {
   width: 100%;
 }
 
@@ -167,10 +167,28 @@ h1, h2, h3, h4 {
   position: relative;
 }
 
+.nav-dropdown > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .nav-dropdown > a::after {
-  content: ' ▾';
-  font-size: 0.8rem;
-  margin-left: 4px;
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid currentColor;
+  position: relative;
+  bottom: auto;
+  opacity: 0.6;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.nav-dropdown:hover > a::after {
+  opacity: 1;
+  transform: translateY(2px);
 }
 
 .dropdown-menu {
