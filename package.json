@@ -8,7 +8,8 @@
     "build": "echo 'Static site - no build needed'"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.39.7"
+    "@supabase/supabase-js": "^2.39.7",
+    "resend": "^3.2.0"
   },
   "devDependencies": {
     "netlify-cli": "^17.15.0"

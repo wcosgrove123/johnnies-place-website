@@ -1,29 +1,9 @@
-// Newsletter subscription function
-// Privacy-first: stores only email and preferences in YOUR database
-// Sends welcome email via Resend
+// Send welcome email when someone subscribes
+// Called automatically by subscribe.js
 
-import { createClient } from '@supabase/supabase-js';
 import { Resend } from 'resend';
 
-// Initialize clients
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
-
 const resend = new Resend(process.env.RESEND_API_KEY);
-
-// Email validation regex
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-// Newsletter preference types
-const VALID_PREFERENCES = [
-  'general',
-  'events',
-  'stories',
-  'fundraising',
-  'volunteer',
-  'monthly'
-];
 
 export const handler = async (event) => {
   const headers = {
@@ -46,140 +26,17 @@ export const handler = async (event) => {
   }
 
   try {
-    const { email, preferences = [] } = JSON.parse(event.body);
+    const { email, preferences = [], unsubscribeToken } = JSON.parse(event.body);
 
-    // Validate email
-    if (!email || !EMAIL_REGEX.test(email)) {
+    if (!email || !unsubscribeToken) {
       return {
         statusCode: 400,
         headers,
-        body: JSON.stringify({ error: 'Please provide a valid email address' })
+        body: JSON.stringify({ error: 'Email and unsubscribe token required' })
       };
     }
 
-    const normalizedEmail = email.toLowerCase().trim();
-
-    // Validate preferences
-    const validatedPreferences = preferences.filter(pref =>
-      VALID_PREFERENCES.includes(pref)
-    );
-
-    if (validatedPreferences.length === 0) {
-      validatedPreferences.push('general');
-    }
-
-    // Check if email already exists
-    const { data: existing, error: checkError } = await supabase
-      .from('subscribers')
-      .select('id, is_active, unsubscribed_at, unsubscribe_token')
-      .eq('email', normalizedEmail)
-      .single();
-
-    if (checkError && checkError.code !== 'PGRST116') {
-      console.error('Error checking subscriber:', checkError);
-      throw new Error('Database error');
-    }
-
-    if (existing) {
-      // Email already exists
-      if (existing.is_active) {
-        // Already subscribed - update preferences
-        const { error: updateError } = await supabase
-          .from('subscribers')
-          .update({
-            preferences: validatedPreferences,
-            updated_at: new Date().toISOString()
-          })
-          .eq('id', existing.id);
-
-        if (updateError) {
-          console.error('Error updating subscriber:', updateError);
-          throw new Error('Failed to update subscription');
-        }
-
-        return {
-          statusCode: 200,
-          headers,
-          body: JSON.stringify({
-            message: 'Preferences updated successfully!',
-            action: 'updated'
-          })
-        };
-      } else {
-        // Previously unsubscribed - reactivate
-        const { error: reactivateError } = await supabase
-          .from('subscribers')
-          .update({
-            is_active: true,
-            unsubscribed_at: null,
-            preferences: validatedPreferences,
-            subscribed_at: new Date().toISOString(),
-            updated_at: new Date().toISOString()
-          })
-          .eq('id', existing.id);
-
-        if (reactivateError) {
-          console.error('Error reactivating subscriber:', reactivateError);
-          throw new Error('Failed to reactivate subscription');
-        }
-
-        // Send welcome email for reactivated subscriber
-        await sendWelcomeEmail(normalizedEmail, validatedPreferences, existing.unsubscribe_token);
-
-        return {
-          statusCode: 200,
-          headers,
-          body: JSON.stringify({
-            message: 'Welcome back! You\'re subscribed again. Check your email!',
-            action: 'reactivated'
-          })
-        };
-      }
-    }
-
-    // New subscriber - insert and get the token
-    const { data: newSubscriber, error: insertError } = await supabase
-      .from('subscribers')
-      .insert([{
-        email: normalizedEmail,
-        preferences: validatedPreferences,
-        is_active: true
-      }])
-      .select('unsubscribe_token')
-      .single();
-
-    if (insertError) {
-      console.error('Error inserting subscriber:', insertError);
-      throw new Error('Failed to subscribe');
-    }
-
-    // Send welcome email to new subscriber
-    await sendWelcomeEmail(normalizedEmail, validatedPreferences, newSubscriber.unsubscribe_token);
-
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify({
-        message: 'Successfully subscribed! Check your email for a welcome message.',
-        action: 'subscribed'
-      })
-    };
-
-  } catch (error) {
-    console.error('Subscription error:', error);
-    return {
-      statusCode: 500,
-      headers,
-      body: JSON.stringify({
-        error: 'Something went wrong. Please try again later.'
-      })
-    };
-  }
-};
-
-// Helper function to send welcome email
-async function sendWelcomeEmail(email, preferences, unsubscribeToken) {
-  try {
+    // Build preference list
     const preferenceNames = {
       general: 'General Updates',
       events: 'Events & Activities',
@@ -192,9 +49,11 @@ async function sendWelcomeEmail(email, preferences, unsubscribeToken) {
       .map(pref => preferenceNames[pref] || pref)
       .join(', ');
 
+    // Create unsubscribe URL
     const unsubscribeUrl = `https://johnniesplace.netlify.app/pages/unsubscribe.html?token=${unsubscribeToken}`;
 
-    await resend.emails.send({
+    // Send welcome email
+    const { data, error } = await resend.emails.send({
       from: `${process.env.FROM_NAME} <${process.env.FROM_EMAIL}>`,
       to: email,
       replyTo: process.env.REPLY_TO_EMAIL,
@@ -202,12 +61,31 @@ async function sendWelcomeEmail(email, preferences, unsubscribeToken) {
       html: getWelcomeEmailHTML(preferenceList, unsubscribeUrl)
     });
 
-    console.log('Welcome email sent to:', email);
+    if (error) {
+      console.error('Resend error:', error);
+      throw new Error('Failed to send welcome email');
+    }
+
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({
+        message: 'Welcome email sent successfully',
+        emailId: data.id
+      })
+    };
+
   } catch (error) {
-    // Don't fail the subscription if email fails
-    console.error('Failed to send welcome email:', error);
+    console.error('Welcome email error:', error);
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({
+        error: 'Failed to send welcome email'
+      })
+    };
   }
-}
+};
 
 // Welcome email HTML template
 function getWelcomeEmailHTML(preferences, unsubscribeUrl) {
