@@ -82,25 +82,10 @@
   <!-- BLOG POSTS -->
   <section class="section">
     <div class="section-inner">
-      <div class="blog-grid">
-
-        <!-- Sample Blog Post -->
-        <article class="blog-post-card">
-          <div class="blog-post-meta">
-            <span class="blog-date">February 11, 2025</span>
-            <span class="blog-author">by Michael Dinda</span>
-          </div>
-          <h2 class="blog-post-title">Welcome to Johnnie's Place</h2>
-          <p class="blog-post-excerpt">
-            We're excited to launch Johnnie's Place, a nonprofit dedicated to providing safe housing and meaningful community for adults with autism.
-          </p>
-        </article>
-
-        <!-- More blog posts will be added here dynamically through the CMS -->
+      <div class="blog-grid" id="blog-posts-container">
         <div class="blog-empty-state">
-          <p>More blog posts coming soon. Check back regularly for updates!</p>
+          <p>Loading blog posts...</p>
         </div>
-
       </div>
     </div>
   </section>
@@ -164,6 +149,91 @@
         newsletterForm.reset();
       });
     }
+
+    // Load blog posts dynamically
+    async function loadBlogPosts() {
+      const container = document.getElementById('blog-posts-container');
+
+      // List of blog post files (in production, this would come from an API or build process)
+      // For now, we'll try to load known posts
+      const blogPosts = [
+        '2025-02-11-welcome'
+      ];
+
+      if (blogPosts.length === 0) {
+        container.innerHTML = '<div class="blog-empty-state"><p>More blog posts coming soon. Check back regularly for updates!</p></div>';
+        return;
+      }
+
+      try {
+        const posts = await Promise.all(
+          blogPosts.map(async (slug) => {
+            try {
+              const response = await fetch(`content/blog/${slug}.md`);
+              if (!response.ok) throw new Error('Post not found');
+              const text = await response.text();
+
+              // Parse frontmatter
+              const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
+              const match = text.match(frontmatterRegex);
+
+              if (match) {
+                const frontmatter = match[1];
+                const meta = {};
+                frontmatter.split('\n').forEach(line => {
+                  const [key, ...valueParts] = line.split(':');
+                  if (key && valueParts.length > 0) {
+                    meta[key.trim()] = valueParts.join(':').trim().replace(/^["']|["']$/g, '');
+                  }
+                });
+
+                return {
+                  slug,
+                  title: meta.title || 'Untitled',
+                  date: meta.date ? new Date(meta.date) : new Date(),
+                  author: meta.author || 'Unknown',
+                  excerpt: meta.excerpt || ''
+                };
+              }
+            } catch (error) {
+              console.error(`Error loading post ${slug}:`, error);
+              return null;
+            }
+          })
+        );
+
+        // Filter out failed posts and sort by date
+        const validPosts = posts.filter(p => p !== null).sort((a, b) => b.date - a.date);
+
+        if (validPosts.length === 0) {
+          container.innerHTML = '<div class="blog-empty-state"><p>More blog posts coming soon. Check back regularly for updates!</p></div>';
+          return;
+        }
+
+        // Render posts
+        container.innerHTML = validPosts.map(post => {
+          const dateStr = post.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+          return `
+            <article class="blog-post-card">
+              <div class="blog-post-meta">
+                <span class="blog-date">${dateStr}</span>
+                <span class="blog-author">by ${post.author}</span>
+              </div>
+              <h2 class="blog-post-title">${post.title}</h2>
+              <p class="blog-post-excerpt">${post.excerpt}</p>
+              <a href="blog-post.html?post=${post.slug}" class="blog-read-more">Read More →</a>
+            </article>
+          `;
+        }).join('') + '<div class="blog-empty-state"><p>More blog posts coming soon. Check back regularly for updates!</p></div>';
+
+      } catch (error) {
+        console.error('Error loading blog posts:', error);
+        container.innerHTML = '<div class="blog-empty-state"><p>Unable to load blog posts. Please try again later.</p></div>';
+      }
+    }
+
+    // Load posts when page loads
+    loadBlogPosts();
   </script>
   <script>
     if (window.netlifyIdentity) {

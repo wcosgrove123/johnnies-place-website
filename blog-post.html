@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Blog Post - Johnnie's Place</title>
+  <meta name="description" content="Blog post from Johnnie's Place">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="Johnnie's Place" class="logo-img">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li class="nav-dropdown">
+          <a href="about.html">About</a>
+          <div class="dropdown-menu">
+            <a href="about.html">Our Story</a>
+            <a href="mission.html">Mission</a>
+            <a href="team.html">Leadership Team</a>
+          </div>
+        </li>
+        <li class="nav-dropdown">
+          <a href="blog.html" class="active">Updates</a>
+          <div class="dropdown-menu">
+            <a href="stay-updated.html">Stay Updated</a>
+            <a href="blog.html">Blog</a>
+            <a href="news.html">News</a>
+          </div>
+        </li>
+        <li><a href="events.html">Events</a></li>
+        <li class="nav-dropdown">
+          <a href="support.html">Support Us</a>
+          <div class="dropdown-menu">
+            <a href="support.html#donate">Donate</a>
+            <a href="fundraisers.html">Fundraisers</a>
+            <a href="get-involved.html">Get Involved</a>
+          </div>
+        </li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="support.html" class="btn btn-primary">Donate</a>
+      </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="mission.html">Mission</a>
+      <a href="team.html">Leadership</a>
+      <a href="stay-updated.html">Stay Updated</a>
+      <a href="blog.html">Blog</a>
+      <a href="news.html">News</a>
+      <a href="events.html">Events</a>
+      <a href="support.html">Donate</a>
+      <a href="fundraisers.html">Fundraisers</a>
+      <a href="get-involved.html">Get Involved</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <section class="page-header">
+    <div class="section-inner">
+      <div id="post-header">
+        <p><a href="blog.html" style="color: var(--brand-primary);">← Back to Blog</a></p>
+        <h1 id="post-title">Loading...</h1>
+        <div id="post-meta" class="blog-post-meta" style="justify-content: center; margin-top: 16px;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG POST CONTENT -->
+  <section class="section">
+    <div class="section-inner">
+      <article id="post-content" class="blog-post-content">
+        <p>Loading blog post...</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="images/logo.png" alt="Johnnie's Place" class="footer-logo">
+          <p>Building community and providing safe housing for adults with autism.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Organization</h4>
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="mission.html">Mission</a>
+        </div>
+        <div class="footer-col">
+          <h4>Get Involved</h4>
+          <a href="support.html">Donate</a>
+          <a href="blog.html">Blog</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <p>318 East Elm Street<br>Conshohocken, PA 19428</p>
+          <p>610 960 8205</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Johnnie's Place. All rights reserved.</p>
+        <p class="footer-legal">501(c)(3) Tax-Exempt Organization</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Get post slug from URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const postSlug = urlParams.get('post');
+
+    if (!postSlug) {
+      document.getElementById('post-content').innerHTML = '<p>No blog post specified. <a href="blog.html">Return to blog</a></p>';
+    } else {
+      // Fetch and display the blog post
+      fetch(`content/blog/${postSlug}.md`)
+        .then(response => {
+          if (!response.ok) throw new Error('Post not found');
+          return response.text();
+        })
+        .then(text => {
+          // Parse frontmatter and content
+          const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
+          const match = text.match(frontmatterRegex);
+
+          if (match) {
+            const frontmatter = match[1];
+            const content = match[2];
+
+            // Parse frontmatter
+            const meta = {};
+            frontmatter.split('\n').forEach(line => {
+              const [key, ...valueParts] = line.split(':');
+              if (key && valueParts.length > 0) {
+                meta[key.trim()] = valueParts.join(':').trim().replace(/^["']|["']$/g, '');
+              }
+            });
+
+            // Update page title
+            document.getElementById('page-title').textContent = meta.title + ' - Johnnie\'s Place';
+            document.getElementById('post-title').textContent = meta.title;
+
+            // Format date
+            let dateStr = 'Unknown date';
+            if (meta.date) {
+              const date = new Date(meta.date);
+              dateStr = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            }
+
+            // Update meta
+            document.getElementById('post-meta').innerHTML = `
+              <span class="blog-date">${dateStr}</span>
+              ${meta.author ? `<span class="blog-author">by ${meta.author}</span>` : ''}
+            `;
+
+            // Convert markdown to HTML and display
+            document.getElementById('post-content').innerHTML = marked.parse(content);
+          } else {
+            throw new Error('Invalid post format');
+          }
+        })
+        .catch(error => {
+          console.error('Error loading blog post:', error);
+          document.getElementById('post-content').innerHTML = `
+            <p>Sorry, we couldn't load this blog post. <a href="blog.html">Return to blog</a></p>
+          `;
+        });
+    }
+
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+</body>
+</html>
