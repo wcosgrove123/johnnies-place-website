@@ -9,7 +9,7 @@ features:
   show_event: true
 financial:
   goal: "$50,000"
-  current: "$12,500"
+  current: "$0"
 event:
   start_date: 2026-05-20T09:00:00.000Z
   end_date: 2026-07-04T17:00:00.000Z
